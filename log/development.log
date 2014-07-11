@@ -1,0 +1,680 @@
+  [1m[36mSQL (0.6ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.9ms)[0m  [1mCREATE TABLE "badges" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "video_id" integer, "badge_type" integer, "badge_from" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("badges")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_badges_on_badge_from" ON "badges" ("badge_from")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("badges")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_badges_on_badge_from')[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_badges_on_badge_type" ON "badges" ("badge_type")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("badges")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_badges_on_badge_type')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_badges_on_badge_from')[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_badges_on_created_at" ON "badges" ("created_at")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("badges")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_badges_on_created_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_badges_on_badge_type')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_badges_on_badge_from')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_badges_on_video_id" ON "badges" ("video_id")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE TABLE "banned_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "reason" text, "created_at" datetime, "updated_at" datetime, "detailed_reason" text) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("banned_users")
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_banned_users_on_email" ON "banned_users" ("email")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.9ms)[0m  [1mCREATE TABLE "banner_images" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "path" varchar(255), "filename" varchar(255), "active" boolean DEFAULT 't', "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("banner_images")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_banner_images_on_active" ON "banner_images" ("active")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE TABLE "blockings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "requesting_user" integer, "blocked_user" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("blockings")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_blockings_on_blocked_user" ON "blockings" ("blocked_user")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("blockings")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_blockings_on_blocked_user')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_blockings_on_requesting_user" ON "blockings" ("requesting_user")
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE TABLE "channel_requests" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "channel_id" integer, "user_id" integer, "token" varchar(255), "ignored" boolean DEFAULT 'f', "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("channel_requests")[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_channel_requests_on_channel_id" ON "channel_requests" ("channel_id")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("channel_requests")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channel_requests_on_channel_id')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_channel_requests_on_token" ON "channel_requests" ("token")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("channel_requests")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channel_requests_on_token')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channel_requests_on_channel_id')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_channel_requests_on_user_id" ON "channel_requests" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE TABLE "channels" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "title" varchar(255), "private" boolean DEFAULT 'f', "featured" boolean DEFAULT 'f', "created_at" datetime, "updated_at" datetime, "public_token" varchar(255), "recommended" boolean DEFAULT 'f') [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("channels")
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_channels_on_created_at_and_updated_at" ON "channels" ("created_at", "updated_at")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("channels")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_created_at_and_updated_at')[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_channels_on_featured" ON "channels" ("featured")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("channels")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_featured')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_channels_on_created_at_and_updated_at')[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_channels_on_private" ON "channels" ("private")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("channels")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_private')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_featured')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_created_at_and_updated_at')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_channels_on_public_token" ON "channels" ("public_token")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("channels")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_public_token')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_private')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_featured')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_created_at_and_updated_at')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_channels_on_recommended" ON "channels" ("recommended")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("channels")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_recommended')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_public_token')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_private')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_featured')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_created_at_and_updated_at')[0m
+  [1m[35mSQL (0.6ms)[0m  CREATE INDEX "index_channels_on_user_id" ON "channels" ("user_id")
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "video_id" integer, "created_at" datetime, "updated_at" datetime, "content" text, "user_id" integer) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("comments")[0m
+  [1m[35mSQL (0.9ms)[0m  CREATE INDEX "index_comments_on_created_at" ON "comments" ("created_at")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("comments")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_comments_on_created_at')
+  [1m[36mSQL (0.9ms)[0m  [1mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("comments")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_comments_on_user_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_comments_on_created_at')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_comments_on_video_id" ON "comments" ("video_id")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE TABLE "delayed_jobs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "priority" integer DEFAULT 0, "attempts" integer DEFAULT 0, "handler" text, "last_error" text, "run_at" datetime, "locked_at" datetime, "failed_at" datetime, "locked_by" varchar(255), "queue" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("delayed_jobs")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "delayed_jobs_priority" ON "delayed_jobs" ("priority", "run_at")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE TABLE "flags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "reason" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.6ms)[0m  [1mCREATE TABLE "icons" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "css_class" varchar(255), "active" boolean, "created_at" datetime, "updated_at" datetime, "icon_type" varchar(255)) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("icons")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_icons_on_active" ON "icons" ("active")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE TABLE "invitation_links" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "email_asking_for_invite" varchar(255), "invitation_limit" integer, "token" varchar(255), "created_at" datetime, "updated_at" datetime, "has_been_invited" boolean DEFAULT 't', "click_count" integer DEFAULT 0) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("invitation_links")
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_invitation_links_on_email_asking_for_invite" ON "invitation_links" ("email_asking_for_invite")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("invitation_links")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_invitation_links_on_email_asking_for_invite')[0m
+  [1m[35mSQL (0.6ms)[0m  CREATE INDEX "index_invitation_links_on_token" ON "invitation_links" ("token")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("invitation_links")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_invitation_links_on_token')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_invitation_links_on_email_asking_for_invite')[0m
+  [1m[35mSQL (0.6ms)[0m  CREATE INDEX "index_invitation_links_on_user_id" ON "invitation_links" ("user_id")
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.9ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "interests" text, "favorite_music" text, "favorite_movies" text, "favorite_books" text, "favorite_people" text, "things_i_could_live_without" text, "one_thing_i_would_change_in_the_world" text, "quotes_to_live_by" text, "created_at" datetime, "updated_at" datetime, "favorite_foods" text, "bio" varchar(255), "website" varchar(255)) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_profiles_on_user_id" ON "profiles" ("user_id")
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE TABLE "restricted_usernames" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar(255), "inclusive" boolean DEFAULT 'f', "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("restricted_usernames")[0m
+  [1m[35mSQL (2.1ms)[0m  CREATE INDEX "index_restricted_usernames_on_inclusive" ON "restricted_usernames" ("inclusive")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("restricted_usernames")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_restricted_usernames_on_inclusive')
+  [1m[36mSQL (1.0ms)[0m  [1mCREATE INDEX "index_restricted_usernames_on_username" ON "restricted_usernames" ("username")[0m
+  [1m[35mSQL (0.6ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "settings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime, "updated_at" datetime, "user_id" integer, "hide_getting_started" boolean DEFAULT 'f', "send_email_for_new_badges" boolean DEFAULT 't', "send_email_for_new_comments" boolean DEFAULT 't', "send_email_for_replies_to_a_prior_comment" boolean DEFAULT 't', "send_email_for_new_subscriber" boolean DEFAULT 't', "send_email_for_featured_video" boolean DEFAULT 't', "send_email_for_private_channel_request" boolean DEFAULT 't', "send_email_for_encoding_completion" boolean DEFAULT 't') [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("settings")
+  [1m[36mSQL (1.9ms)[0m  [1mCREATE INDEX "index_settings_on_user_id" ON "settings" ("user_id")[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE TABLE "social_networks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "uid" varchar(255), "provider" varchar(255), "created_at" datetime, "updated_at" datetime, "token" varchar(255), "user_id" integer, "token_secret" varchar(255)) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("social_networks")
+  [1m[36mSQL (0.9ms)[0m  [1mCREATE INDEX "index_social_networks_on_provider" ON "social_networks" ("provider")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("social_networks")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_social_networks_on_provider')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_social_networks_on_token_secret" ON "social_networks" ("token_secret")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("social_networks")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_social_networks_on_token_secret')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_social_networks_on_provider')[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_social_networks_on_uid" ON "social_networks" ("uid")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("social_networks")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_social_networks_on_uid')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_social_networks_on_token_secret')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_social_networks_on_provider')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_social_networks_on_user_id" ON "social_networks" ("user_id")[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE TABLE "subscriptions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "subscriber_id" integer, "publisher_id" integer, "created_at" datetime, "updated_at" datetime, "channel_id" integer, "collaborator" boolean DEFAULT 'f') [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("subscriptions")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_subscriptions_on_channel_id" ON "subscriptions" ("channel_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("subscriptions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_subscriptions_on_channel_id')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_subscriptions_on_created_at" ON "subscriptions" ("created_at")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("subscriptions")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_subscriptions_on_created_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_subscriptions_on_channel_id')[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_subscriptions_on_publisher_id" ON "subscriptions" ("publisher_id")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("subscriptions")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_subscriptions_on_publisher_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_subscriptions_on_created_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_subscriptions_on_channel_id')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_subscriptions_on_subscriber_id" ON "subscriptions" ("subscriber_id")[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE TABLE "taggings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "video_id" integer, "tag_id" integer, "created_at" datetime, "updated_at" datetime, "video_owner_id" integer) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("taggings")
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_taggings_on_created_at" ON "taggings" ("created_at")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("taggings")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_taggings_on_created_at')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_taggings_on_tag_id" ON "taggings" ("tag_id")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("taggings")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_taggings_on_tag_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_taggings_on_created_at')[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE INDEX "index_taggings_on_video_id" ON "taggings" ("video_id")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("taggings")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_taggings_on_video_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_taggings_on_tag_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_taggings_on_created_at')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_taggings_on_video_owner_id" ON "taggings" ("video_owner_id")[0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (2.6ms)[0m  [1mCREATE TABLE "tags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime, "updated_at" datetime, "content" varchar(255)) [0m
+  [1m[35mSQL (0.7ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (2.6ms)[0m  [1mCREATE TABLE "user_events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "event_type" integer, "event_object_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime, "event_creator_id" integer, "error_during_render" boolean DEFAULT 'f', "seen_by_user" boolean DEFAULT 'f') [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("user_events")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_user_events_on_created_at" ON "user_events" ("created_at")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("user_events")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_created_at')[0m
+  [1m[35mSQL (0.9ms)[0m  CREATE INDEX "index_user_events_on_event_object_id" ON "user_events" ("event_object_id")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("user_events")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_user_events_on_event_object_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_created_at')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_user_events_on_event_type" ON "user_events" ("event_type")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("user_events")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_user_events_on_event_type')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_event_object_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_user_events_on_created_at')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_user_events_on_seen_by_user" ON "user_events" ("seen_by_user")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("user_events")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_seen_by_user')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_user_events_on_event_type')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_event_object_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_user_events_on_created_at')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_user_events_on_user_id" ON "user_events" ("user_id")[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.9ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "password" varchar(255), "salt" varchar(255), "name" varchar(255), "image" varchar(255), "birthday" date, "gender" varchar(255), "created_at" datetime, "updated_at" datetime, "location" varchar(255), "reset_token" varchar(255), "pw_reset_timestamp" datetime, "image_status" varchar(255), "is_deactivated" boolean DEFAULT 'f', "delta" boolean DEFAULT 't' NOT NULL, "username" varchar(255), "banner_image" varchar(255), "banner_image_id" integer DEFAULT 1, "username_changed_at" datetime, "background_image_id" integer DEFAULT 0) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_users_on_created_at" ON "users" ("created_at")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_users_on_created_at')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("users")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_users_on_email')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_users_on_created_at')[0m
+  [1m[35mSQL (0.9ms)[0m  CREATE INDEX "index_users_on_username" ON "users" ("username")
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE TABLE "video_errors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "video_graph_id" integer, "error_status" integer, "created_at" datetime, "updated_at" datetime, "error_message" text, "user_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.0ms)[0m  CREATE TABLE "video_flags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "flag_id" integer, "video_id" integer, "flagged_by" integer, "detailed_reason" text, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("video_flags")[0m
+  [1m[35mSQL (0.9ms)[0m  CREATE INDEX "index_video_flags_on_flag_id" ON "video_flags" ("flag_id")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("video_flags")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_flags_on_flag_id')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_video_flags_on_flagged_by" ON "video_flags" ("flagged_by")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("video_flags")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_video_flags_on_flagged_by')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_flags_on_flag_id')
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE INDEX "index_video_flags_on_video_id" ON "video_flags" ("video_id")[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (3.6ms)[0m  [1mCREATE TABLE "video_graphs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "thumbnail_path" varchar(255), "path" varchar(255), "callback_url" varchar(255), "base_filename" varchar(255), "encoding_type" varchar(255) DEFAULT 'enc1', "thumbnail_type" varchar(255) DEFAULT 'thumb1', "status" integer DEFAULT 0, "zencoder_job_id" integer, "remote_host" varchar(255), "remote_video_id" varchar(255), "remote_thumbnail" varchar(255), "delta" boolean DEFAULT 't' NOT NULL, "created_at" datetime, "updated_at" datetime, "submitting_error_count" integer DEFAULT 0, "transcoding_error_count" integer DEFAULT 0, "error_message" text, "user_id" integer, "deleted" boolean DEFAULT 'f') [0m
+  [1m[35mSQL (0.2ms)[0m  PRAGMA index_list("video_graphs")
+  [1m[36mSQL (1.8ms)[0m  [1mCREATE INDEX "index_video_graphs_on_base_filename" ON "video_graphs" ("base_filename")[0m
+  [1m[35mSQL (0.3ms)[0m  PRAGMA index_list("video_graphs")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_video_graphs_on_base_filename')[0m
+  [1m[35mSQL (0.9ms)[0m  CREATE INDEX "index_video_graphs_on_deleted" ON "video_graphs" ("deleted")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("video_graphs")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_graphs_on_deleted')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_video_graphs_on_base_filename')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_video_graphs_on_remote_host" ON "video_graphs" ("remote_host")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("video_graphs")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_graphs_on_remote_host')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_video_graphs_on_deleted')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_graphs_on_base_filename')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_video_graphs_on_remote_video_id" ON "video_graphs" ("remote_video_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("video_graphs")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_video_graphs_on_remote_video_id')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_video_graphs_on_remote_host')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_video_graphs_on_deleted')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_graphs_on_base_filename')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_video_graphs_on_status" ON "video_graphs" ("status")[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.1ms)[0m  [1mCREATE TABLE "videos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime, "delta" boolean DEFAULT 't' NOT NULL, "selected_thumbnail" integer DEFAULT 0, "public_token" varchar(255), "send_to_facebook" boolean DEFAULT 'f', "send_to_twitter" boolean DEFAULT 'f', "video_graph_id" integer, "channel_id" integer, "title" varchar(255), "description" text, "featured_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("videos")
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_videos_on_channel_id" ON "videos" ("channel_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("videos")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_channel_id')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_videos_on_created_at" ON "videos" ("created_at")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("videos")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_created_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_channel_id')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_videos_on_featured_at" ON "videos" ("featured_at")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("videos")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_featured_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_created_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_channel_id')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_videos_on_public_token" ON "videos" ("public_token")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("videos")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_public_token')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_featured_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_created_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_channel_id')
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE INDEX "index_videos_on_user_id" ON "videos" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("videos")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_user_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_public_token')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_featured_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_created_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_channel_id')[0m
+  [1m[35mSQL (0.8ms)[0m  CREATE INDEX "index_videos_on_video_graph_id" ON "videos" ("video_graph_id")
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.6ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("schema_migrations")[0m
+  [1m[35mSQL (0.7ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20130604202246')[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('about', 'f', '2014-07-11 23:08:07.645146', '2014-07-11 23:08:07.645146')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('account', 'f', '2014-07-11 23:08:07.647806', '2014-07-11 23:08:07.647806')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('ad', 'f', '2014-07-11 23:08:07.649533', '2014-07-11 23:08:07.649533')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('admin', 't', '2014-07-11 23:08:07.651180', '2014-07-11 23:08:07.651180')
+  [1m[36mAREL (0.9ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('administrator', 't', '2014-07-11 23:08:07.652936', '2014-07-11 23:08:07.652936')[0m
+  [1m[35mAREL (0.6ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('ads', 'f', '2014-07-11 23:08:07.658604', '2014-07-11 23:08:07.658604')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('ajax', 'f', '2014-07-11 23:08:07.663800', '2014-07-11 23:08:07.663800')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('android', 'f', '2014-07-11 23:08:07.666760', '2014-07-11 23:08:07.666760')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('api', 'f', '2014-07-11 23:08:07.668651', '2014-07-11 23:08:07.668651')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('app', 'f', '2014-07-11 23:08:07.670509', '2014-07-11 23:08:07.670509')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('apps', 'f', '2014-07-11 23:08:07.672320', '2014-07-11 23:08:07.672320')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('auth', 'f', '2014-07-11 23:08:07.675234', '2014-07-11 23:08:07.675234')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('authenticate', 'f', '2014-07-11 23:08:07.678696', '2014-07-11 23:08:07.678696')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('blog', 'f', '2014-07-11 23:08:07.681011', '2014-07-11 23:08:07.681011')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('brands', 'f', '2014-07-11 23:08:07.682923', '2014-07-11 23:08:07.682923')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('brevidy', 't', '2014-07-11 23:08:07.684744', '2014-07-11 23:08:07.684744')
+  [1m[36mAREL (0.7ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('brevity', 't', '2014-07-11 23:08:07.686953', '2014-07-11 23:08:07.686953')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('business', 'f', '2014-07-11 23:08:07.695409', '2014-07-11 23:08:07.695409')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('businesses', 'f', '2014-07-11 23:08:07.699768', '2014-07-11 23:08:07.699768')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('campaign', 'f', '2014-07-11 23:08:07.702383', '2014-07-11 23:08:07.702383')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('campaigns', 'f', '2014-07-11 23:08:07.704410', '2014-07-11 23:08:07.704410')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('career', 'f', '2014-07-11 23:08:07.706288', '2014-07-11 23:08:07.706288')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('careers', 'f', '2014-07-11 23:08:07.707929', '2014-07-11 23:08:07.707929')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('contact', 'f', '2014-07-11 23:08:07.709563', '2014-07-11 23:08:07.709563')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('contact_us', 'f', '2014-07-11 23:08:07.711305', '2014-07-11 23:08:07.711305')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('contest', 'f', '2014-07-11 23:08:07.712947', '2014-07-11 23:08:07.712947')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('contests', 'f', '2014-07-11 23:08:07.714766', '2014-07-11 23:08:07.714766')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('create', 'f', '2014-07-11 23:08:07.716584', '2014-07-11 23:08:07.716584')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('credit', 'f', '2014-07-11 23:08:07.718385', '2014-07-11 23:08:07.718385')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('credits', 'f', '2014-07-11 23:08:07.720060', '2014-07-11 23:08:07.720060')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('delete', 'f', '2014-07-11 23:08:07.721780', '2014-07-11 23:08:07.721780')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('demo', 'f', '2014-07-11 23:08:07.723448', '2014-07-11 23:08:07.723448')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('design', 'f', '2014-07-11 23:08:07.725160', '2014-07-11 23:08:07.725160')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('developer', 'f', '2014-07-11 23:08:07.726960', '2014-07-11 23:08:07.726960')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('developers', 'f', '2014-07-11 23:08:07.728862', '2014-07-11 23:08:07.728862')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('discover', 'f', '2014-07-11 23:08:07.730582', '2014-07-11 23:08:07.730582')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('discussions', 'f', '2014-07-11 23:08:07.732315', '2014-07-11 23:08:07.732315')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('download', 'f', '2014-07-11 23:08:07.734151', '2014-07-11 23:08:07.734151')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('downloads', 'f', '2014-07-11 23:08:07.735898', '2014-07-11 23:08:07.735898')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('edit', 'f', '2014-07-11 23:08:07.737661', '2014-07-11 23:08:07.737661')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('embed', 'f', '2014-07-11 23:08:07.739356', '2014-07-11 23:08:07.739356')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('engineering', 'f', '2014-07-11 23:08:07.741330', '2014-07-11 23:08:07.741330')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('event', 'f', '2014-07-11 23:08:07.743108', '2014-07-11 23:08:07.743108')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('events', 'f', '2014-07-11 23:08:07.744819', '2014-07-11 23:08:07.744819')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('explore', 'f', '2014-07-11 23:08:07.746577', '2014-07-11 23:08:07.746577')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('faq', 'f', '2014-07-11 23:08:07.748572', '2014-07-11 23:08:07.748572')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('featured', 'f', '2014-07-11 23:08:07.750201', '2014-07-11 23:08:07.750201')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('feedback', 'f', '2014-07-11 23:08:07.751834', '2014-07-11 23:08:07.751834')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('find', 'f', '2014-07-11 23:08:07.753595', '2014-07-11 23:08:07.753595')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('group', 'f', '2014-07-11 23:08:07.755327', '2014-07-11 23:08:07.755327')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('groups', 'f', '2014-07-11 23:08:07.757142', '2014-07-11 23:08:07.757142')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('help', 'f', '2014-07-11 23:08:07.759006', '2014-07-11 23:08:07.759006')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('hirefireapp', 'f', '2014-07-11 23:08:07.760848', '2014-07-11 23:08:07.760848')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('history', 'f', '2014-07-11 23:08:07.762650', '2014-07-11 23:08:07.762650')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('home', 'f', '2014-07-11 23:08:07.764456', '2014-07-11 23:08:07.764456')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('inbox', 'f', '2014-07-11 23:08:07.766221', '2014-07-11 23:08:07.766221')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('info', 'f', '2014-07-11 23:08:07.768002', '2014-07-11 23:08:07.768002')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('investor', 'f', '2014-07-11 23:08:07.769729', '2014-07-11 23:08:07.769729')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('investors', 'f', '2014-07-11 23:08:07.771408', '2014-07-11 23:08:07.771408')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('investor_relations', 'f', '2014-07-11 23:08:07.780621', '2014-07-11 23:08:07.780621')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('invitation', 'f', '2014-07-11 23:08:07.782985', '2014-07-11 23:08:07.782985')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('invitations', 'f', '2014-07-11 23:08:07.784842', '2014-07-11 23:08:07.784842')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('invite', 'f', '2014-07-11 23:08:07.786625', '2014-07-11 23:08:07.786625')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('ios', 'f', '2014-07-11 23:08:07.788441', '2014-07-11 23:08:07.788441')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('ipad', 'f', '2014-07-11 23:08:07.790184', '2014-07-11 23:08:07.790184')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('iphone', 'f', '2014-07-11 23:08:07.792017', '2014-07-11 23:08:07.792017')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('job', 'f', '2014-07-11 23:08:07.793833', '2014-07-11 23:08:07.793833')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('jobs', 'f', '2014-07-11 23:08:07.795576', '2014-07-11 23:08:07.795576')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('join', 'f', '2014-07-11 23:08:07.797321', '2014-07-11 23:08:07.797321')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('legal', 'f', '2014-07-11 23:08:07.799093', '2014-07-11 23:08:07.799093')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('live', 'f', '2014-07-11 23:08:07.800704', '2014-07-11 23:08:07.800704')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('log_in', 'f', '2014-07-11 23:08:07.802451', '2014-07-11 23:08:07.802451')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('log_out', 'f', '2014-07-11 23:08:07.804156', '2014-07-11 23:08:07.804156')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('login', 'f', '2014-07-11 23:08:07.805905', '2014-07-11 23:08:07.805905')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('logout', 'f', '2014-07-11 23:08:07.807651', '2014-07-11 23:08:07.807651')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('marketing', 'f', '2014-07-11 23:08:07.809365', '2014-07-11 23:08:07.809365')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('message', 'f', '2014-07-11 23:08:07.811177', '2014-07-11 23:08:07.811177')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('messages', 'f', '2014-07-11 23:08:07.813068', '2014-07-11 23:08:07.813068')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('mobile', 'f', '2014-07-11 23:08:07.814984', '2014-07-11 23:08:07.814984')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('music', 'f', '2014-07-11 23:08:07.816765', '2014-07-11 23:08:07.816765')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('new', 'f', '2014-07-11 23:08:07.818392', '2014-07-11 23:08:07.818392')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('notification', 'f', '2014-07-11 23:08:07.819998', '2014-07-11 23:08:07.819998')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('notifications', 'f', '2014-07-11 23:08:07.821803', '2014-07-11 23:08:07.821803')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('oembed', 'f', '2014-07-11 23:08:07.823661', '2014-07-11 23:08:07.823661')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('offer', 'f', '2014-07-11 23:08:07.825326', '2014-07-11 23:08:07.825326')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('offers', 'f', '2014-07-11 23:08:07.826988', '2014-07-11 23:08:07.826988')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('official', 'f', '2014-07-11 23:08:07.828960', '2014-07-11 23:08:07.828960')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('onboarding', 'f', '2014-07-11 23:08:07.830934', '2014-07-11 23:08:07.830934')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('p', 'f', '2014-07-11 23:08:07.833077', '2014-07-11 23:08:07.833077')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('partner', 'f', '2014-07-11 23:08:07.835051', '2014-07-11 23:08:07.835051')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('partners', 'f', '2014-07-11 23:08:07.836868', '2014-07-11 23:08:07.836868')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('password', 'f', '2014-07-11 23:08:07.838631', '2014-07-11 23:08:07.838631')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('payment', 'f', '2014-07-11 23:08:07.840300', '2014-07-11 23:08:07.840300')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('payments', 'f', '2014-07-11 23:08:07.841978', '2014-07-11 23:08:07.841978')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('people', 'f', '2014-07-11 23:08:07.843831', '2014-07-11 23:08:07.843831')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('popular', 'f', '2014-07-11 23:08:07.845709', '2014-07-11 23:08:07.845709')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('preferred', 'f', '2014-07-11 23:08:07.847428', '2014-07-11 23:08:07.847428')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('premier', 'f', '2014-07-11 23:08:07.849127', '2014-07-11 23:08:07.849127')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('premium', 'f', '2014-07-11 23:08:07.850742', '2014-07-11 23:08:07.850742')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('press', 'f', '2014-07-11 23:08:07.852457', '2014-07-11 23:08:07.852457')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('press_center', 'f', '2014-07-11 23:08:07.854069', '2014-07-11 23:08:07.854069')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('privacy', 'f', '2014-07-11 23:08:07.855907', '2014-07-11 23:08:07.855907')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('private', 'f', '2014-07-11 23:08:07.857797', '2014-07-11 23:08:07.857797')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('public', 'f', '2014-07-11 23:08:07.859689', '2014-07-11 23:08:07.859689')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('recent', 'f', '2014-07-11 23:08:07.861480', '2014-07-11 23:08:07.861480')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('recommended', 'f', '2014-07-11 23:08:07.863200', '2014-07-11 23:08:07.863200')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('remove', 'f', '2014-07-11 23:08:07.864892', '2014-07-11 23:08:07.864892')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('rss', 'f', '2014-07-11 23:08:07.866568', '2014-07-11 23:08:07.866568')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('sale', 'f', '2014-07-11 23:08:07.868311', '2014-07-11 23:08:07.868311')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('sales', 'f', '2014-07-11 23:08:07.870044', '2014-07-11 23:08:07.870044')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('search', 'f', '2014-07-11 23:08:07.871701', '2014-07-11 23:08:07.871701')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('secure', 'f', '2014-07-11 23:08:07.873340', '2014-07-11 23:08:07.873340')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('security', 'f', '2014-07-11 23:08:07.875218', '2014-07-11 23:08:07.875218')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('session', 'f', '2014-07-11 23:08:07.877071', '2014-07-11 23:08:07.877071')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('sessions', 'f', '2014-07-11 23:08:07.878921', '2014-07-11 23:08:07.878921')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('setting', 'f', '2014-07-11 23:08:07.880671', '2014-07-11 23:08:07.880671')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('settings', 'f', '2014-07-11 23:08:07.882377', '2014-07-11 23:08:07.882377')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('share', 'f', '2014-07-11 23:08:07.884258', '2014-07-11 23:08:07.884258')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('sign_in', 'f', '2014-07-11 23:08:07.886281', '2014-07-11 23:08:07.886281')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('sign_out', 'f', '2014-07-11 23:08:07.888017', '2014-07-11 23:08:07.888017')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('sign_up', 'f', '2014-07-11 23:08:07.889744', '2014-07-11 23:08:07.889744')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('signin', 'f', '2014-07-11 23:08:07.891469', '2014-07-11 23:08:07.891469')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('signout', 'f', '2014-07-11 23:08:07.893169', '2014-07-11 23:08:07.893169')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('signup', 'f', '2014-07-11 23:08:07.894907', '2014-07-11 23:08:07.894907')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('soulofvideo', 'f', '2014-07-11 23:08:07.896708', '2014-07-11 23:08:07.896708')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('spam', 'f', '2014-07-11 23:08:07.898320', '2014-07-11 23:08:07.898320')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('stream', 'f', '2014-07-11 23:08:07.900037', '2014-07-11 23:08:07.900037')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('subscribe', 'f', '2014-07-11 23:08:07.901777', '2014-07-11 23:08:07.901777')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('subscribers', 'f', '2014-07-11 23:08:07.903443', '2014-07-11 23:08:07.903443')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('subscriptions', 'f', '2014-07-11 23:08:07.905128', '2014-07-11 23:08:07.905128')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('suggested', 'f', '2014-07-11 23:08:07.906764', '2014-07-11 23:08:07.906764')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('tag', 'f', '2014-07-11 23:08:07.908483', '2014-07-11 23:08:07.908483')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('tags', 'f', '2014-07-11 23:08:07.910218', '2014-07-11 23:08:07.910218')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('team', 'f', '2014-07-11 23:08:07.912008', '2014-07-11 23:08:07.912008')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('terms', 'f', '2014-07-11 23:08:07.913711', '2014-07-11 23:08:07.913711')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('theater', 'f', '2014-07-11 23:08:07.915414', '2014-07-11 23:08:07.915414')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('theaters', 'f', '2014-07-11 23:08:07.917167', '2014-07-11 23:08:07.917167')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('theatre', 'f', '2014-07-11 23:08:07.918855', '2014-07-11 23:08:07.918855')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('theatres', 'f', '2014-07-11 23:08:07.920577', '2014-07-11 23:08:07.920577')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('thesoulofvideo', 'f', '2014-07-11 23:08:07.922346', '2014-07-11 23:08:07.922346')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('tools', 'f', '2014-07-11 23:08:07.924202', '2014-07-11 23:08:07.924202')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('tos', 'f', '2014-07-11 23:08:07.926065', '2014-07-11 23:08:07.926065')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('tour', 'f', '2014-07-11 23:08:07.927777', '2014-07-11 23:08:07.927777')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('tv', 'f', '2014-07-11 23:08:07.929491', '2014-07-11 23:08:07.929491')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('update', 'f', '2014-07-11 23:08:07.931173', '2014-07-11 23:08:07.931173')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('upgrade', 'f', '2014-07-11 23:08:07.932889', '2014-07-11 23:08:07.932889')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('user', 'f', '2014-07-11 23:08:07.934512', '2014-07-11 23:08:07.934512')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('users', 'f', '2014-07-11 23:08:07.936190', '2014-07-11 23:08:07.936190')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('video', 'f', '2014-07-11 23:08:07.937839', '2014-07-11 23:08:07.937839')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('videos', 'f', '2014-07-11 23:08:07.939656', '2014-07-11 23:08:07.939656')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('vlog', 'f', '2014-07-11 23:08:07.946728', '2014-07-11 23:08:07.946728')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('watch', 'f', '2014-07-11 23:08:07.952580', '2014-07-11 23:08:07.952580')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('welcome', 'f', '2014-07-11 23:08:07.954738', '2014-07-11 23:08:07.954738')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('wiki', 'f', '2014-07-11 23:08:07.956644', '2014-07-11 23:08:07.956644')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('c', 'f', '2014-07-11 23:08:07.958503', '2014-07-11 23:08:07.958503')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('username_availability', 'f', '2014-07-11 23:08:07.960225', '2014-07-11 23:08:07.960225')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "restricted_usernames" ("username", "inclusive", "created_at", "updated_at") VALUES ('rails', 'f', '2014-07-11 23:08:07.962095', '2014-07-11 23:08:07.962095')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Creative', 'badgeCreative', 't', '2014-07-11 23:08:07.975312', '2014-07-11 23:08:07.975312', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Beautiful', 'badgeBeautiful', 't', '2014-07-11 23:08:07.977668', '2014-07-11 23:08:07.977668', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Clever', 'badgeClever', 't', '2014-07-11 23:08:07.979596', '2014-07-11 23:08:07.979596', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Creepy', 'badgeCreepy', 't', '2014-07-11 23:08:07.981551', '2014-07-11 23:08:07.981551', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Cute', 'badgeCute', 't', '2014-07-11 23:08:07.983543', '2014-07-11 23:08:07.983543', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Dislike it', 'badgeDislikeIt', 't', '2014-07-11 23:08:07.985569', '2014-07-11 23:08:07.985569', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Epic', 'badgeEpic', 't', '2014-07-11 23:08:07.987469', '2014-07-11 23:08:07.987469', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Evil', 'badgeEvil', 't', '2014-07-11 23:08:07.989407', '2014-07-11 23:08:07.989407', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Fail', 'badgeFail', 't', '2014-07-11 23:08:07.991346', '2014-07-11 23:08:07.991346', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Gifted', 'badgeGifted', 't', '2014-07-11 23:08:07.993267', '2014-07-11 23:08:07.993267', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Hilarious', 'badgeHilarious', 't', '2014-07-11 23:08:07.995437', '2014-07-11 23:08:07.995437', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Hot', 'badgeHot', 't', '2014-07-11 23:08:07.997442', '2014-07-11 23:08:07.997442', 'badge')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Huh?', 'badgeHuh', 't', '2014-07-11 23:08:07.999968', '2014-07-11 23:08:07.999968', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Inspirational', 'badgeInspirational', 't', '2014-07-11 23:08:08.002891', '2014-07-11 23:08:08.002891', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Like it', 'badgeLikeIt', 't', '2014-07-11 23:08:08.005046', '2014-07-11 23:08:08.005046', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Love it', 'badgeLoveIt', 't', '2014-07-11 23:08:08.007070', '2014-07-11 23:08:08.007070', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Naughty', 'badgeNaughty', 't', '2014-07-11 23:08:08.009149', '2014-07-11 23:08:08.009149', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Original', 'badgeOriginal', 't', '2014-07-11 23:08:08.011340', '2014-07-11 23:08:08.011340', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Sad', 'badgeSad', 't', '2014-07-11 23:08:08.013359', '2014-07-11 23:08:08.013359', 'badge')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Scary', 'badgeScary', 't', '2014-07-11 23:08:08.015220', '2014-07-11 23:08:08.015220', 'badge')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Trendy', 'badgeTrendy', 't', '2014-07-11 23:08:08.017269', '2014-07-11 23:08:08.017269', 'badge')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Wise', 'badgeWise', 't', '2014-07-11 23:08:08.019467', '2014-07-11 23:08:08.019467', 'badge')[0m
+  [1m[35mAREL (0.8ms)[0m  INSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Wow...', 'badgeWow', 't', '2014-07-11 23:08:08.024267', '2014-07-11 23:08:08.024267', 'badge')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "icons" ("name", "css_class", "active", "created_at", "updated_at", "icon_type") VALUES ('Yummy', 'badgeYummy', 't', '2014-07-11 23:08:08.030154', '2014-07-11 23:08:08.030154', 'badge')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "flags" ("reason", "created_at", "updated_at") VALUES ('There is something wrong with this video', '2014-07-11 23:08:08.038847', '2014-07-11 23:08:08.038847')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "flags" ("reason", "created_at", "updated_at") VALUES ('This video is inappropriate, offensive, or violates the video guidelines', '2014-07-11 23:08:08.042103', '2014-07-11 23:08:08.042103')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "flags" ("reason", "created_at", "updated_at") VALUES ('This video is spam, misleading, or mass-advertising', '2014-07-11 23:08:08.044023', '2014-07-11 23:08:08.044023')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "flags" ("reason", "created_at", "updated_at") VALUES ('This video infringes my rights or invades my privacy', '2014-07-11 23:08:08.045846', '2014-07-11 23:08:08.045846')[0m
+  [1m[35mAREL (1.5ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-1.jpg', 't', '2014-07-11 23:08:08.052814', '2014-07-11 23:08:08.052814')
+  [1m[36mAREL (0.6ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-2.jpg', 't', '2014-07-11 23:08:08.061191', '2014-07-11 23:08:08.061191')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-3.jpg', 't', '2014-07-11 23:08:08.065784', '2014-07-11 23:08:08.065784')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-4.jpg', 't', '2014-07-11 23:08:08.068046', '2014-07-11 23:08:08.068046')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-5.jpg', 't', '2014-07-11 23:08:08.070109', '2014-07-11 23:08:08.070109')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-6.jpg', 't', '2014-07-11 23:08:08.071984', '2014-07-11 23:08:08.071984')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-7.jpg', 't', '2014-07-11 23:08:08.073893', '2014-07-11 23:08:08.073893')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-8.jpg', 't', '2014-07-11 23:08:08.076269', '2014-07-11 23:08:08.076269')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-9.jpg', 't', '2014-07-11 23:08:08.079072', '2014-07-11 23:08:08.079072')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-10.jpg', 't', '2014-07-11 23:08:08.081379', '2014-07-11 23:08:08.081379')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-11.jpg', 't', '2014-07-11 23:08:08.083421', '2014-07-11 23:08:08.083421')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-12.jpg', 't', '2014-07-11 23:08:08.085304', '2014-07-11 23:08:08.085304')[0m
+  [1m[35mAREL (0.9ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-13.jpg', 't', '2014-07-11 23:08:08.089158', '2014-07-11 23:08:08.089158')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-14.jpg', 't', '2014-07-11 23:08:08.096348', '2014-07-11 23:08:08.096348')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-15.jpg', 't', '2014-07-11 23:08:08.099323', '2014-07-11 23:08:08.099323')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-16.jpg', 't', '2014-07-11 23:08:08.101146', '2014-07-11 23:08:08.101146')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-17.jpg', 't', '2014-07-11 23:08:08.102952', '2014-07-11 23:08:08.102952')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-18.jpg', 't', '2014-07-11 23:08:08.104864', '2014-07-11 23:08:08.104864')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-19.jpg', 't', '2014-07-11 23:08:08.106660', '2014-07-11 23:08:08.106660')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-20.jpg', 't', '2014-07-11 23:08:08.108587', '2014-07-11 23:08:08.108587')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-21.jpg', 't', '2014-07-11 23:08:08.110337', '2014-07-11 23:08:08.110337')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-22.jpg', 't', '2014-07-11 23:08:08.112160', '2014-07-11 23:08:08.112160')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-23.jpg', 't', '2014-07-11 23:08:08.114111', '2014-07-11 23:08:08.114111')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-24.jpg', 't', '2014-07-11 23:08:08.116076', '2014-07-11 23:08:08.116076')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-25.jpg', 't', '2014-07-11 23:08:08.117885', '2014-07-11 23:08:08.117885')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-26.jpg', 't', '2014-07-11 23:08:08.119512', '2014-07-11 23:08:08.119512')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-27.jpg', 't', '2014-07-11 23:08:08.121492', '2014-07-11 23:08:08.121492')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-28.jpg', 't', '2014-07-11 23:08:08.123509', '2014-07-11 23:08:08.123509')[0m
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-29.jpg', 't', '2014-07-11 23:08:08.125295', '2014-07-11 23:08:08.125295')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "banner_images" ("path", "filename", "active", "created_at", "updated_at") VALUES ('images/banners', 'banner-30.jpg', 't', '2014-07-11 23:08:08.127173', '2014-07-11 23:08:08.127173')[0m
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT COUNT(*) FROM "delayed_jobs" WHERE (handler LIKE '%run_pending_or_failed_video_encodings_without_delay%')[0m
+  [1m[35mDelayed::Backend::ActiveRecord::Job Load (0.1ms)[0m  SELECT "delayed_jobs".* FROM "delayed_jobs" WHERE (handler LIKE '%run_pending_or_failed_video_encodings_without_delay%')
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "delayed_jobs" ("priority", "attempts", "handler", "last_error", "run_at", "locked_at", "failed_at", "locked_by", "queue", "created_at", "updated_at") VALUES (50, 0, '--- !ruby/object:Delayed::PerformableMethod
+object: !ruby/class ''VideoGraph''
+method_name: :run_pending_or_failed_video_encodings_without_delay
+args: []
+', NULL, '2014-07-11 23:10:37.995210', NULL, NULL, NULL, NULL, '2014-07-11 23:09:38.002431', '2014-07-11 23:09:38.002431')
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT COUNT(*) FROM "delayed_jobs" WHERE (handler LIKE '%run_pending_or_failed_video_encodings_without_delay%')[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+Migrating to CreateDelayedJobs (20140711230938)
+  [1m[36mSQL (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.3ms)[0m  [1mDROP TABLE "delayed_jobs"[0m
+  [1m[35mSQL (0.2ms)[0m  CREATE TABLE "delayed_jobs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "priority" integer DEFAULT 0, "attempts" integer DEFAULT 0, "handler" text, "last_error" text, "run_at" datetime, "locked_at" datetime, "failed_at" datetime, "locked_by" varchar(255), "queue" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("delayed_jobs")[0m
+  [1m[35mSQL (0.2ms)[0m  CREATE INDEX "delayed_jobs_priority" ON "delayed_jobs" ("priority", "run_at")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140711230938')[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("badges")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_badges_on_video_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_badges_on_created_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_badges_on_badge_type')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_badges_on_badge_from')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("banned_users")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_banned_users_on_email')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("banner_images")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_banner_images_on_active')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("blockings")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_blockings_on_requesting_user')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_blockings_on_blocked_user')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("channel_requests")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channel_requests_on_user_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channel_requests_on_token')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channel_requests_on_channel_id')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("channels")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_user_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_recommended')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_public_token')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_private')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_channels_on_featured')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_channels_on_created_at_and_updated_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("comments")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_comments_on_video_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_comments_on_user_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_comments_on_created_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("delayed_jobs")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('delayed_jobs_priority')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("flags")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("icons")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_icons_on_active')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("invitation_links")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_invitation_links_on_user_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_invitation_links_on_token')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_invitation_links_on_email_asking_for_invite')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_profiles_on_user_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("restricted_usernames")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_restricted_usernames_on_username')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_restricted_usernames_on_inclusive')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("settings")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_settings_on_user_id')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("social_networks")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_social_networks_on_user_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_social_networks_on_uid')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_social_networks_on_token_secret')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_social_networks_on_provider')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("subscriptions")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_subscriptions_on_subscriber_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_subscriptions_on_publisher_id')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_subscriptions_on_created_at')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_subscriptions_on_channel_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("taggings")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_taggings_on_video_owner_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_taggings_on_video_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_taggings_on_tag_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_taggings_on_created_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("tags")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("user_events")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_user_id')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_user_events_on_seen_by_user')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_event_type')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_user_events_on_event_object_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_user_events_on_created_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_users_on_username')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_users_on_email')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_users_on_created_at')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("video_errors")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("video_flags")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_flags_on_video_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_video_flags_on_flagged_by')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_flags_on_flag_id')
+  [1m[36mSQL (0.2ms)[0m  [1mPRAGMA index_list("video_graphs")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_video_graphs_on_status')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_video_graphs_on_remote_video_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_graphs_on_remote_host')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_video_graphs_on_deleted')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_video_graphs_on_base_filename')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("videos")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_videos_on_video_graph_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_user_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_videos_on_public_token')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_featured_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_videos_on_created_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_videos_on_channel_id')[0m
