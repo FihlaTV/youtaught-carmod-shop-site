@@ -25,15 +25,22 @@ body
 		top:50px;
 }
 .logo
-{
+	{
+
+		padding-left:1px;
+		font-size:55px;
+		color:#FFF;
+		font-style:oblique;
+		font-weight:bolder;
+		text-shadow:1px 2px 3px rgba(0,0,0,.6);
+
+
+		
+
 	
+		
 }
 
-	.logo img
-	{
-		max-width:135px;
-
-	}
 
 
 .nav
