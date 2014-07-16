@@ -9,6 +9,24 @@
 
 /* CSS Document */
 
+#email{
+	top:100px;
+	position: relative;
+	left:210px;
+	border-radius: 10px;
+	width:130%;
+	overflow: visible;
+}
+
+#submit {
+	top:100px;
+	position: relative;
+	left:275px;
+	width:100%;
+	border-radius: 10px;
+	text-align: center
+}
+
 body
 {
 	font-family: 'Lato', sans-serif !important;
@@ -28,16 +46,11 @@ body
 	{
 
 		padding-left:1px;
-		font-size:55px;
+		font-size:60px;
 		color:#FFF;
 		font-style:oblique;
 		font-weight:bolder;
-		text-shadow:1px 2px 3px rgba(0,0,0,.6);
-
-
-		
-
-	
+		text-shadow:5px 2px 3px rgba(0,0,0,.6);	
 		
 }
 
@@ -879,7 +892,6 @@ margin-bottom: 20px;
 		margin:0 10px;
 
 		
-		
 	}
 
 
@@ -909,7 +921,7 @@ margin-bottom: 20px;
 	text-align:center;
 }
 
-@media (min-width: 768px) {
+@media  (min-width:768px) {
 	
 	.banner .carousel-fade .carousel-inner .item {
 
@@ -978,13 +990,16 @@ margin-bottom: 20px;
 		border-radius:2px;
 		margin-bottom:20px;
 	}
+
 	
 }
 
-@media (min-width: 320px) and (max-width:767px) {
+@media all (min-width: 320px) and (max-width:767px) {
+	
+
 /* Logo & Nav*/
 
-	.banner .carousel-fade .carousel-inner .item {
+	.banner .carousel-fade .carousel-inner .item  {
 
   background-attachment:scroll;
 
@@ -1143,10 +1158,20 @@ margin-bottom: 20px;
 {
 	margin-bottom:0px;
 }
+
+h1 {
+	font-size: 5px
+}
+	#email {
+	left:50%;
+	position: absolute;
+	width: 20%
+
 }
 
-@media (max-width: 320px)
-{
+}
+
+@media (max-width: 320px){
 	.banner .carousel-fade .carousel-inner .item {
 
   background-attachment:scroll;
