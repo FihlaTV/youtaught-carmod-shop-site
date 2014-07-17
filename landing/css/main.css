@@ -304,6 +304,15 @@ body
 	padding-bottom:0px !important;
 	line-height:52px;
 
+
+}
+
+.opt-container .btn-blue:hover{
+
+
+	background:#1b3e4b;
+
+
 }
 
 /* success message overlay*/
@@ -344,6 +353,112 @@ body
 	font-size:16px;
 	padding:15px 0;
 }
+
+
+
+
+
+/* Boucing Arrow Animation */
+
+@keyframes arrowbounce {
+from {
+-webkit-transform: translateY(0);
+-moz-transform: translateY(0);
+transform: translateY(0);
+}
+to {
+	-webkit-transform: translateY(-20px);
+	-moz-transform: translateY(-20px);
+	transform: translateY(-20px);
+}
+}
+@-moz-keyframes arrowbounce { /* Firefox */
+from {
+-webkit-transform: translateY(0);
+-moz-transform: translateY(0);
+transform: translateY(0);
+}
+to {
+	-webkit-transform: translateY(-20px);
+	-moz-transform: translateY(-20px);
+	transform: translateY(-20px);
+}
+}
+@-webkit-keyframes arrowbounce { /* Safari and Chrome */
+from {
+-webkit-transform: translateY(0);
+-moz-transform: translateY(0);
+transform: translateY(0);
+}
+to {
+	-webkit-transform: translateY(-20px);
+	-moz-transform: translateY(-20px);
+	transform: translateY(-20px);
+}
+}
+@-o-keyframes arrowbounce { /* Opera */
+from {
+-webkit-transform: translateY(0);
+-moz-transform: translateY(0);
+transform: translateY(0);
+}
+to {
+	-webkit-transform: translateY(-20px);
+	-moz-transform: translateY(-20px);
+	transform: translateY(-20px);
+}
+}
+.scrollto, .scrollto:hover {
+	margin:30px;
+	display:block;
+	color:#FFF;
+	text-decoration:none;
+	width:200px;
+	margin:0 auto;
+}
+.scrollto--arrow {
+	padding:10px;
+}
+.scrollto--arrow img {
+	animation: arrowbounce 1s alternate infinite;
+	-moz-animation: arrowbounce 1s alternate infinite; /* Firefox */
+	-webkit-animation: arrowbounce 1s alternate infinite; /* Safari and Chrome */
+	-o-animation: arrowbounce 1s alternate infinite; /* Opera */
+
+
+
+
+
+
+
+
+/*After beta signup button - new "head"*/
+
+
+
+.section-title {
+	text-align:center;
+	margin-top:60px;
+	margin-bottom:20px;
+}
+
+.section-title{
+	text-align:center;
+	margin-top:60px;
+	margin-bottom:20px;
+
+
+}
+.section-title h2 {
+	color:#384047;
+}
+.section-title h4 {
+	color:#94a3a8;
+}
+
+
+
+
 
 /*Mail Chimp setting*/
 
@@ -1179,3 +1294,7 @@ h1 {
 
 }
 }
+
+
+
+
