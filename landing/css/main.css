@@ -409,15 +409,17 @@ to {
 }
 }
 .scrollto, .scrollto:hover {
-	margin:30px;
-	display:block;
-	color:#FFF;
+	margin:1px;
+	display:inline;
+	color:black;
 	text-decoration:none;
 	width:200px;
-	margin:0 auto;
+	margin:2 auto;
 }
 .scrollto--arrow {
-	padding:10px;
+	padding-top:10px;
+	color:black;
+
 }
 .scrollto--arrow img {
 	animation: arrowbounce 1s alternate infinite;
@@ -446,6 +448,7 @@ to {
 	text-align:center;
 	margin-top:60px;
 	margin-bottom:20px;
+	padding-bottom:250px;
 
 
 }
